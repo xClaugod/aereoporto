@@ -3,6 +3,8 @@ package com.aereoporto.model;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.aereoporto.Converter.CustomDateConverter;
 import com.aereoporto.Converter.CustomTimestampConverter;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -23,7 +25,7 @@ public class Flight {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_VOLO")
     Integer id;
-
+ 
     @Convert(converter = CustomDateConverter.class)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     @Column(name = "GIORNO")

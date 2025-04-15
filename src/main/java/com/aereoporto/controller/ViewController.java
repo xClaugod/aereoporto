@@ -41,7 +41,7 @@ public class ViewController {
         return "home";
     }
 
-    @PostMapping("/")
+    @PostMapping("/search-flights")
     public String searchFlights(
             @RequestParam String from,
             @RequestParam String to,

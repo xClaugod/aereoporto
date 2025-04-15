@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Modifica Volo</title>
+</head>
+<body>
+<h1>Modifica Volo [[${flight.id}]]</h1>
+
+<form th:action="@{'/admin/edit-flight/' + ${flight.id}}" method="post">
+    <!-- ID del volo (non modificabile) -->
+    <input type="hidden" name="id" th:value="${flight.id}" />
+   
+    
+    <!-- Partenza -->
+    <label for="departureCity">Partenza:</label>
+    <select id="departureCity" name="departureCity" required>
+        <option 
+            th:each="airport : ${airports}" 
+            th:value="${airport.city}" 
+            th:text="${airport.city}"             
+            th:selected="${airport.city == flight.departureCity}">
+        </option>
+    </select>
+    <!-- Arrivo -->
+    <label for="arrivalCity">Arrivo:</label>
+    <select id="arrivalCity" name="arrivalCity" required>
+        <option 
+            th:each="airport : ${airports}" 
+            th:value="${airport.city}" 
+            th:text="${airport.city}"
+            th:selected="${airport.city == flight.arrivalCity}">
+        </option>
+    </select>
+    <!-- Data -->
+    <label for="departureTime">Data:</label>
+    <input type="datetime-local" id="departureTime" name="departureTime" th:value="${#dates.format(flight.departureTime, 'yyyy-MM-dd''T''HH:mm')}" required /><br><br>
+
+    <!-- Passeggeri -->
+    <label for="passengers">Passeggeri:</label>
+    <input type="number" id="passengers" name="passengers" th:value="${flight.passengers}" min="0" required /><br><br>
+
+    <!-- Bagagli -->
+    <label for="goods">Peso Bagagli (kg):</label>
+    <input type="number" id="goods" name="goods" th:value="${flight.goods}" min="0" required /><br><br>
+
+   <!-- Aereo -->
+    <label for="idAirplane">Tipo Aereo:</label>
+       <select id="idAirplane" name="idAirplane" required>
+           <option 
+               th:each="plane : ${airplanes}" 
+               th:value="${plane.typeAirplane}" 
+               th:text="${plane.typeAirplane}"
+               th:selected="${plane.typeAirplane == flight.idAirplane}">
+           </option>
+       </select><br><br>
+
+    <button type="submit">Aggiorna</button>
+</form>
+
+</body>
+</html>

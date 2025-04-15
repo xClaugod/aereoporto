@@ -2,6 +2,11 @@ package com.aereoporto.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
+
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -16,14 +21,6 @@ import com.aereoporto.repository.FlightRepository;
 public class FlightService {
     @Autowired
     private FlightRepository flightRepository;
-
-    /* 
-    public List<FlightDTO> getAllFlights() {
-        return flightRepository.findAll().
-                                stream()
-                                .map(FlightDTO::new)
-                                .collect(Collectors.toList());
-    }*/
 
     public List<Flight> getAllFlights(){return flightRepository.findAll();}
 
@@ -53,26 +50,9 @@ public class FlightService {
         flightRepository.deleteById(id);	
     }
 
-/*
-    public List<Flight> searchAerei(String nome, String cognome, String squadra) {
-        Specification<Flight> specificRequest = Specification.where(null); //query vuota
 
-        if (nome != null && !nome.isEmpty()) {
-            specificRequest = specificRequest.and((root, query, criteriaBuilder) -> //l'and combina più condizioni
-                criteriaBuilder.like(root.get("nome"), "%" + nome + "%")); //aggiungo like sul parametro nome
-        }
-
-        if (cognome != null && !cognome.isEmpty()) {
-            specificRequest = specificRequest.and((root, query, criteriaBuilder) ->
-                criteriaBuilder.like(root.get("cognome"), "%" + cognome + "%"));
-        }
-
-        if (squadra != null && !squadra.isEmpty()) {
-            specificRequest = specificRequest.and((root, query, criteriaBuilder) ->
-                criteriaBuilder.like(root.get("squadra"), "%" + squadra + "%"));
-        }
-
-        return flightRepository.findAll(specificRequest);
-    }*/
+    public List<Flight> getFlightsFromNowOn() {
+        return flightRepository.findUpcomingFlights();
+    }
     
 }

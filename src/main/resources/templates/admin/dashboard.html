@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dashboard Admin</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        h1 { margin-bottom: 30px; }
+        .actions a {
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            width: 300px;
+            border-radius: 5px;
+        }
+        .actions a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Dashboard Amministratore</h1>
+
+<div class="actions">
+    <a href="/admin/new-flight">➕ Inserisci nuovo volo</a>
+    <a href="/admin/select-flight-to-edit">✈️ Modifica tipo di aereo per un volo</a>
+    <a href="/admin/select-flight-to-delete">🗑️ Cancella un volo</a>
+    <a href="/admin/upcoming-flights">📋 Visualizza voli futuri con dettagli passeggeri e bagagli</a>
+</div>
+
+<div style="text-align: right; margin-bottom: 20px;">
+    <form th:action="@{/logout}" method="post">
+        <button type="submit" style="padding: 8px 16px; background-color: red; color: white; border: none; border-radius: 5px;">
+            🔒 Logout
+        </button>
+    </form>
+</div>
+
+</body>
+</html>

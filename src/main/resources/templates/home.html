@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home Page</title>
+    <!-- Collegamento al file CSS -->
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+    <h1>Benvenuto nella pagina principale!</h1>
+    
+    <form action="#" method="post">
+        <label for="from">Aeroporto di partenza</label>
+        <select id="from" name="from" required>
+            <option th:each="airport : ${airports}" th:value="${airport.city}" th:text="${airport.city}"></option>
+        </select>
+        
+        <label for="to">Aeroporto di arrivo</label>
+        <select id="to" name="to" required>
+            <option th:each="airport : ${airports}" th:value="${airport.city}" th:text="${airport.city}"></option>
+        </select>
+        
+        <label for="date">Data volo</label>
+        <input type="date" id="date" name="date" required />
+                
+        <label for="baggageWeight">Numero persone</label>
+        <input type="number" id="numPassengers" name="numPassengers" placeholder="1" required />
+        
+        <label for="baggageWeight">Peso bagaglio (in kg)</label>
+        <input type="number" id="baggageWeight" name="baggageWeight" placeholder="2" required />
+        
+        <button type="submit">Cerca voli</button>
+    </form>
+</body>
+</html>

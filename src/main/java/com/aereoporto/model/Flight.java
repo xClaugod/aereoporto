@@ -14,6 +14,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Version;
 
 @Entity
 @Table(name = "VOLI")
@@ -53,6 +54,10 @@ public class Flight {
     @Column(name = "MERCI")
     Integer goods;
 
+    @Column(name = "VERSION")
+    @Version
+    private Long version;
+
     public Flight() {}
 
     public Flight(Integer id, Date day, String departureCity, String arrivalCity, Timestamp departureTime,
@@ -66,6 +71,7 @@ public class Flight {
         this.idAirplane = idAirplane;
         this.passengers = passengers;
         this.goods = goods;
+        this.version = 0l;
     }
 
     public Integer getId() {
@@ -138,6 +144,10 @@ public class Flight {
 
     public void setGoods(Integer goods) {
         this.goods = goods;
+    }
+
+    public long getVersion(){ 
+        return this.version;
     }
 
     public String toString() {

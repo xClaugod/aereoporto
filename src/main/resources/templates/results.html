@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Risultati voli</title>
+</head>
+<body>
+    <h1>Risultati per [[${from}]] → [[${to}]]</h1>
+
+    <div th:if="${noFlights}">
+        <p>Nessun volo disponibile tra gli aeroporti selezionati.</p>
+    </div>
+
+    <!-- Mostra il messaggio di errore in caso di conflitto di concorrenza -->
+    <div th:if="${error}">
+        <p style="color: red;">[[${error}]]</p>
+    </div>
+
+    <table th:unless="${noFlights}" border="1">
+        <tr>
+            <th>Volo</th>
+            <th>Data partenza</th>
+            <th>Posti disponibili</th>
+            <th>Bagaglio disponibile</th>
+            <th>Prenota</th>
+        </tr>
+        <tr th:each="flightWithAvailability : ${flightsWithAvailability}">
+            <td th:text="${flightWithAvailability.flight.id}">1</td>
+            <td th:text="${#dates.format(flightWithAvailability.flight.departureTime, 'yyyy-MM-dd HH:mm')}">Data</td>
+            <td th:text="${flightWithAvailability.availableSeats}">Posti</td>
+            <td th:text="${flightWithAvailability.availableWeight}">Bagaglio</td>
+            <td>
+                <form th:action="@{/book}" method="post">
+                    <input type="hidden" name="flightId" th:value="${flightWithAvailability.flight.id}" />
+                    <input type="hidden" name="numPassengers" th:value="${numPassengers}" />
+                    <input type="hidden" name="baggageWeight" th:value="${baggageWeight}" />
+                    <button type="submit">Prenota</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+
+    <br>
+    <a href="/">Torna alla home</a>
+</body>
+</html>

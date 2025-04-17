@@ -52,6 +52,8 @@ public class Flight {
     @Column(name = "MERCI")
     Integer goods;
 
+    //Field added to handle concurrency, not specified in the assignment!!!
+    //https://medium.com/@sumit-s/optimistic-locking-concurrency-control-with-a-version-column-2e3db2a8120d
     @Column(name = "VERSION")
     @Version
     private Long version;

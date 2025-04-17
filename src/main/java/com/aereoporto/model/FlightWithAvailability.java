@@ -1,5 +1,6 @@
 package com.aereoporto.model;
 
+//class to support operations on Flight
 public class FlightWithAvailability {
     private Flight flight;
     private int availableSeats;

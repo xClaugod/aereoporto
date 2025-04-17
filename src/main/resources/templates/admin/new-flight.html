@@ -1,125 +1,120 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <title>Nuovo Volo</title>
+    <title>New Flight</title>
     <link rel="stylesheet" th:href="@{/css/admin-new-flight.css}">
     <link rel="stylesheet" th:href="@{/css/modal.css}">
-        <script>
-function validateDates() {
-    const departureTime = document.getElementById('departureTime').value;
-    const arrivalTime = document.getElementById('arrivalTime').value;
-    
-    if (departureTime && arrivalTime) {
-        if (arrivalTime <= departureTime) {
-            alert('La data di arrivo deve essere maggiore della data di partenza.');
-            return false; // Impedisce l'invio del form
+    <script>
+        function validateDates() {
+            const departureTime = document.getElementById('departureTime').value;
+            const arrivalTime = document.getElementById('arrivalTime').value;
+
+            if (departureTime && arrivalTime) {
+                if (arrivalTime <= departureTime) {
+                    alert("Arrival time can't be next to departure time.");
+                    return false;
+                }
+            }
+            return true;
         }
-    }
-    return true; // Permette l'invio del form
-}
 
-function validateForm() {
-    const departureCity = document.getElementById('departureCity').value;
-    const arrivalCity = document.getElementById('arrivalCity').value;
-    const departureTime = document.getElementById('departureTime').value;
-    const arrivalTime = document.getElementById('arrivalTime').value;
-    const idAirplane = document.getElementById('idAirplane').value;
+        function validateForm() {
+            const departureCity = document.getElementById('departureCity').value;
+            const arrivalCity = document.getElementById('arrivalCity').value;
+            const departureTime = document.getElementById('departureTime').value;
+            const arrivalTime = document.getElementById('arrivalTime').value;
+            const idAirplane = document.getElementById('idAirplane').value;
 
-    // Verifica che tutti i campi siano compilati
-    if (!departureCity || !arrivalCity || !departureTime || !arrivalTime || !idAirplane) {
-        alert('Per favore, compila tutti i campi.');
-        return false; // Impedisce l'invio del form se non tutti i campi sono compilati
-    }
-    return true; // Permette l'invio del form
-}
-
-let selectedForm = null;
-
-function openModal(form) {
-    selectedForm = form;
-    document.getElementById('confirmationModal').style.display = 'flex';
-}
-
-function closeModal() {
-    selectedForm = null;
-    document.getElementById('confirmationModal').style.display = 'none';
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-    const button = document.querySelector("form button[type='submit']");
-    button.addEventListener("click", function (e) {
-        e.preventDefault();
-        
-        // Se il form è valido, apri la modale
-        if (validateForm() && validateDates()) {
-            const form = this.closest("form");
-            openModal(form);
+            if (!departureCity || !arrivalCity || !departureTime || !arrivalTime || !idAirplane) {
+                alert('Please fill all the fields.');
+                return false;
+            }
+            return true;
         }
-    });
 
-    document.getElementById("confirmCreation").addEventListener("click", function () {
-        if (selectedForm) {
-            selectedForm.submit();
+        let selectedForm = null;
+
+        function openModal(form) {
+            selectedForm = form;
+            document.getElementById('confirmationModal').style.display = 'flex';
         }
-    });
-});
+
+        function closeModal() {
+            selectedForm = null;
+            document.getElementById('confirmationModal').style.display = 'none';
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const button = document.querySelector("form button[type='submit']");
+            button.addEventListener("click", function (e) {
+                e.preventDefault();
+
+                if (validateForm() && validateDates()) {
+                    const form = this.closest("form");
+                    openModal(form);
+                }
+            });
+
+            document.getElementById("confirmCreation").addEventListener("click", function () {
+                if (selectedForm) {
+                    selectedForm.submit();
+                }
+            });
+        });
 
     </script>
 </head>
+
 <body>
     <div class="container">
-        <h1>Inserisci Nuovo Volo</h1>
+        <h1>Insert new flight</h1>
 
         <form th:action="@{/admin/new-flight}" method="post" th:object="${flight}" onsubmit="return validateDates()">
-            <label for="departureCity">Partenza:</label>
+            <label for="departureCity">Departure:</label>
             <select id="departureCity" name="departureCity" required>
-                <option value="">-- Seleziona --</option>
-                <option th:each="airport : ${airports}"
-                        th:value="${airport.city}"
-                        th:text="${airport.city}">
+                <option value="">-- Select --</option>
+                <option th:each="airport : ${airports}" th:value="${airport.city}" th:text="${airport.city}">
                 </option>
             </select><br>
 
-            <label for="arrivalCity">Arrivo:</label>
+            <label for="arrivalCity">Arrival:</label>
             <select id="arrivalCity" name="arrivalCity" required>
-                <option value="">-- Seleziona --</option>
-                <option th:each="airport : ${airports}"
-                        th:value="${airport.city}"
-                        th:text="${airport.city}">
+                <option value="">-- Select --</option>
+                <option th:each="airport : ${airports}" th:value="${airport.city}" th:text="${airport.city}">
                 </option>
             </select><br>
 
-            <label for="departureTime">Data e Ora partenza:</label>
+            <label for="departureTime">Departure time</label>
             <input type="datetime-local" id="departureTime" name="departureTime" required><br>
 
-            <label for="departureTime">Data e Ora arrivo:</label>
+            <label for="departureTime">Arrival time</label>
             <input type="datetime-local" id="arrivalTime" name="arrivalTime" required><br>
 
-            <label for="idAirplane">Aereo:</label>
+            <label for="idAirplane">Airplane:</label>
             <select id="idAirplane" name="idAirplane" required>
-                <option value="">-- Seleziona --</option>
-                <option th:each="a : ${airplanes}"
-                        th:value="${a.typeAirplane}"
-                        th:text="${a.typeAirplane}">
+                <option value="">-- Select --</option>
+                <option th:each="a : ${airplanes}" th:value="${a.typeAirplane}" th:text="${a.typeAirplane}">
                 </option>
             </select><br>
 
-            <button type="submit">Salva</button>
+            <button type="submit">Save</button>
         </form>
 
         <div style="margin-top:20px;">
-            <a href="/admin/dashboard">⟵ Torna alla Dashboard</a>
+            <a href="/admin/dashboard">⟵ Back to Dashboard</a>
         </div>
     </div>
     <div class="modal-confirm-overlay" id="confirmationModal" style="display: none;">
         <div class="modal-confirm">
-            <p>Confermi di voler creare il volo ? </p>
+            <p>Do you confirm to create this flight? </p>
             <div class="modal-confirm-buttons">
-                <button id="confirmCreation">Conferma</button>
-                <button type="button" onclick="closeModal()">Annulla</button>
+                <button id="confirmCreation">Confirm</button>
+                <button type="button" onclick="closeModal()">Cancel</button>
             </div>
         </div>
     </div>
 
 </body>
+
 </html>

@@ -11,6 +11,13 @@ public class CustomTimestampConverter implements AttributeConverter<Timestamp, S
 
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yy HH:mm:ss,nnnnnnnnn");
 
+    /**
+     * Convert a Timestamp to its database representation as a String.
+     * Null Timestamps are converted to null Strings.
+     * 
+     * @param attribute the Timestamp to convert
+     * @return the String representation of the Timestamp
+     */
     @Override
     public String convertToDatabaseColumn(Timestamp attribute) {
         if (attribute == null)
@@ -18,6 +25,13 @@ public class CustomTimestampConverter implements AttributeConverter<Timestamp, S
         return formatter.format(attribute.toLocalDateTime());
     }
 
+    /**
+     * Convert a String in the database representation to its Timestamp object.
+     * Null Strings are converted to null Timestamps.
+     * 
+     * @param dbData the String to convert
+     * @return the Timestamp object
+     */
     @Override
     public Timestamp convertToEntityAttribute(String dbData) {
         if (dbData == null)

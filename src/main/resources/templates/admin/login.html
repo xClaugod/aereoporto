@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <title>Login</title>
     <link rel="stylesheet" th:href="@{/css/admin-login.css}" />
 </head>
+
 <body>
-    <h1>Login Amministratore</h1>
+    <h1>Admin Login</h1>
     <form th:action="@{/admin/login}" method="post" th:classappend="${param.error} ? 'shake'">
         <div th:if="${param.error}">
-            <p >❌ Username o password non validi.</p>
+            <p>❌ BAD username or password </p>
         </div>
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required />
-        <br/>
+        <br />
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required />
-        <br/>
-        <button type="submit">Accedi</button>
-        <a href="/">Torna alla home</a>
+        <br />
+        <button type="submit">Login</button>
+        <a href="/">Back home</a>
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
     </form>
@@ -25,7 +27,8 @@
 
 
     <div th:if="${param.logout}">
-        <p>Logout effettuato con successo.</p>
+        <p>Logout successful</p>
     </div>
 </body>
+
 </html>

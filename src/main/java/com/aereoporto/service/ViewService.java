@@ -5,17 +5,11 @@ import com.aereoporto.model.Flight;
 import com.aereoporto.model.FlightWithAvailability;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.OptimisticLockingFailureException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,12 +27,30 @@ public class ViewService {
     @Autowired
     private BookingService bookingService;
 
+    /**
+     * Prepare the home page view.
+     *
+     * @param model the model to populate.
+     * @return the name of the view to render.
+     */
     public String prepareHomePage(Model model) {
         model.addAttribute("airports", airportService.getAllAirports());
         return "home";
     }
 
-    public String processFlightSearch(String from, String to, LocalDate date, int numPassengers, Integer baggageWeight, Model model) {
+    /**
+     * Prepare the results view.
+     *
+     * @param from          the departure city.
+     * @param to            the arrival city.
+     * @param date          the date of the flight.
+     * @param numPassengers the number of passengers.
+     * @param baggageWeight the baggage weight to book.
+     * @param model         the model to populate.
+     * @return the name of the view to render.
+     */
+    public String processFlightSearch(String from, String to, LocalDate date, int numPassengers, Integer baggageWeight,
+            Model model) {
         final int effectiveBaggageWeight = (baggageWeight != null) ? baggageWeight : 0;
 
         List<Flight> allFlights = flightService.getAllFlights();
@@ -73,16 +85,25 @@ public class ViewService {
         return "results";
     }
 
+    /**
+     * Processes the booking of a flight.
+     * 
+     * @param flightId      the id of the flight to book.
+     * @param numPassengers the number of passengers.
+     * @param baggageWeight the baggage weight to book.
+     * @param model         the model to populate.
+     * @return the name of the view to render.
+     */
     public String bookFlight(int flightId, int numPassengers, int baggageWeight, Model model) {
         try {
             bookingService.bookFlight(flightId, numPassengers, baggageWeight);
-            model.addAttribute("message", "La tua prenotazione è stata elaborata.");
+            model.addAttribute("message", "Booking confirmed!");
             return "bookConfirmation";
         } catch (OptimisticLockingFailureException e) {
-            model.addAttribute("error", "Il volo è stato prenotato da qualcun altro. Riprova.");
+            model.addAttribute("error", "Someone else booked the flight :( Retry)");
             return "results";
         } catch (Exception e) {
-            model.addAttribute("error", "Volo non trovato.");
+            model.addAttribute("error", "Flight not found");
             return "results";
         }
     }

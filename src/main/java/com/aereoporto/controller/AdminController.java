@@ -1,9 +1,6 @@
 package com.aereoporto.controller;
 
-import com.aereoporto.model.Flight;
 import com.aereoporto.service.AdminService;
-import com.aereoporto.service.AirplaneService;
-import com.aereoporto.service.AirportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,12 +14,6 @@ public class AdminController {
 
     @Autowired
     private AdminService adminService;
-
-    @Autowired
-    private AirplaneService airplaneService;
-
-    @Autowired
-    private AirportService airportService;
 
     @GetMapping("/login-page")
     public String showLoginForm() {
@@ -57,15 +48,16 @@ public class AdminController {
 
     @PostMapping("/edit-flight/{id}")
     public String updateFlight(@PathVariable("id") int flightId,
-                               @RequestParam String departureCity,
-                               @RequestParam String arrivalCity,
-                               @RequestParam("departureTime") LocalDateTime departureTime,
-                               @RequestParam("arrivalTime") LocalDateTime arrivalTime,
-                               @RequestParam String idAirplane,
-                               @RequestParam int passengers,
-                               @RequestParam int goods,
-                               Model model) {
-        return adminService.updateFlight(flightId, departureCity, arrivalCity, departureTime, arrivalTime, idAirplane, passengers, goods);
+            @RequestParam String departureCity,
+            @RequestParam String arrivalCity,
+            @RequestParam("departureTime") LocalDateTime departureTime,
+            @RequestParam("arrivalTime") LocalDateTime arrivalTime,
+            @RequestParam String idAirplane,
+            @RequestParam int passengers,
+            @RequestParam int goods,
+            Model model) {
+        return adminService.updateFlight(flightId, departureCity, arrivalCity, departureTime, arrivalTime, idAirplane,
+                passengers, goods);
     }
 
     @PostMapping("/delete-flight/{id}")

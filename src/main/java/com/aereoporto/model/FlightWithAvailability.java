@@ -28,5 +28,5 @@ public class FlightWithAvailability {
         return "FlightWithAvailability [flight=" + flight + ", availableSeats=" + availableSeats + ", availableWeight="
                 + availableWeight + "]";
     }
-    
+
 }

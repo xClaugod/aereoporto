@@ -1,89 +1,91 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <title>Risultati voli</title>
+    <title>Flight results</title>
     <link rel="stylesheet" th:href="@{/css/results.css}" />
     <link rel="stylesheet" th:href="@{/css/modal.css}" />
 </head>
+
 <body>
-    <h1>Risultati per [[${from}]] → [[${to}]]</h1>
+    <h1>Results for [[${from}]] → [[${to}]]</h1>
 
     <div th:if="${noFlights}">
-        <h1>Nessun volo disponibile tra gli aeroporti selezionati.</h1>
+        <h1>No flights found</h1>
     </div>
 
-    <!-- Mostra il messaggio di errore in caso di conflitto di concorrenza -->
     <div th:if="${error}">
         <p style="color: red;">[[${error}]]</p>
     </div>
 
     <table th:unless="${noFlights}" border="1">
         <tr>
-            <th>Volo</th>
-            <th>Data partenza</th>
-            <th>Posti disponibili</th>
-            <th>Bagaglio disponibile</th>
-            <th>Prenota</th>
+            <th>Flight</th>
+            <th>Departure Time</th>
+            <th>Available Seats</th>
+            <th>Available baggage</th>
+            <th>Book</th>
         </tr>
         <tr th:each="flightWithAvailability : ${flightsWithAvailability}">
             <td th:text="${flightWithAvailability.flight.id}">1</td>
-            <td th:text="${#dates.format(flightWithAvailability.flight.departureTime, 'yyyy-MM-dd HH:mm')}">Data</td>
-            <td th:text="${flightWithAvailability.availableSeats}">Posti</td>
-            <td th:text="${flightWithAvailability.availableWeight}">Bagaglio</td>
+            <td th:text="${#dates.format(flightWithAvailability.flight.departureTime, 'yyyy-MM-dd HH:mm')}">Date</td>
+            <td th:text="${flightWithAvailability.availableSeats}">Seats</td>
+            <td th:text="${flightWithAvailability.availableWeight}">Baggage</td>
             <td>
                 <form th:action="@{/book}" method="post">
                     <input type="hidden" name="flightId" th:value="${flightWithAvailability.flight.id}" />
                     <input type="hidden" name="numPassengers" th:value="${numPassengers}" />
                     <input type="hidden" name="baggageWeight" th:value="${baggageWeight}" />
-                    <button type="submit">Prenota</button>
+                    <button type="submit">Book</button>
                 </form>
             </td>
         </tr>
     </table>
-    
+
 
     <br>
-    <a href="/">Torna alla home</a>
+    <a href="/">Back to home</a>
     <div class="modal-confirm-overlay" id="confirmationModal" style="display: none;">
         <div class="modal-confirm">
-            <p>Confermi la prenotazione del volo per [[${numPassengers}]] persone? </p>
+            <p>Do you confirm booking for [[${numPassengers}]] peoples? </p>
             <div class="modal-confirm-buttons">
-                <button id="confirmBooking">Conferma</button>
-                <button type="button" onclick="closeModal()">Annulla</button>
+                <button id="confirmBooking">Confirm</button>
+                <button type="button" onclick="closeModal()">Cancel</button>
             </div>
         </div>
     </div>
 
 
-<script>
-    let selectedForm = null;
+    <script>
+        let selectedForm = null;
 
-    function openModal(form) {
-        selectedForm = form;
-        document.getElementById('confirmationModal').style.display = 'flex';
-    }
+        function openModal(form) {
+            selectedForm = form;
+            document.getElementById('confirmationModal').style.display = 'flex';
+        }
 
-    function closeModal() {
-        selectedForm = null;
-        document.getElementById('confirmationModal').style.display = 'none';
-    }
+        function closeModal() {
+            selectedForm = null;
+            document.getElementById('confirmationModal').style.display = 'none';
+        }
 
-    document.addEventListener("DOMContentLoaded", function () {
-        const buttons = document.querySelectorAll("form button[type='submit']");
-        buttons.forEach(button => {
-            button.addEventListener("click", function (e) {
-                e.preventDefault();
-                const form = this.closest("form");
-                openModal(form);
+        document.addEventListener("DOMContentLoaded", function () {
+            const buttons = document.querySelectorAll("form button[type='submit']");
+            buttons.forEach(button => {
+                button.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    const form = this.closest("form");
+                    openModal(form);
+                });
+            });
+
+            document.getElementById("confirmBooking").addEventListener("click", function () {
+                if (selectedForm) {
+                    selectedForm.submit();
+                }
             });
         });
-
-        document.getElementById("confirmBooking").addEventListener("click", function () {
-            if (selectedForm) {
-                selectedForm.submit();
-            }
-        });
-    });
-</script>
+    </script>
 </body>
+
 </html>

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Modifica Volo</title>
+    <title>Update Flight</title>
     <link rel="stylesheet" th:href="@{/css/admin-new-flight.css}">
     <link rel="stylesheet" th:href="@{/css/modal.css}">
 
@@ -13,116 +13,110 @@
 
             if (departureTime && arrivalTime) {
                 if (arrivalTime <= departureTime) {
-                    alert('La data di arrivo deve essere maggiore della data di partenza.');
-                    return false; // Impedisce l'invio del form
+                    alert("Arrival time can't be next to departure time.");
+                    return false;
                 }
             }
-            return true; // Permette l'invio del form
+            return true;
         }
 
-        function goback(){
+        function goback() {
             window.history.back();
         }
 
         let selectedForm = null;
 
-function openModal(form) {
-    selectedForm = form;
-    document.getElementById('confirmationModal').style.display = 'flex';
-}
-
-function closeModal() {
-    selectedForm = null;
-    document.getElementById('confirmationModal').style.display = 'none';
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-    const buttons = document.querySelectorAll("form button[type='submit']");
-    buttons.forEach(button => {
-        button.addEventListener("click", function (e) {
-            e.preventDefault();
-            if (validateDates()) {
-
-                const form = this.closest("form");
-                openModal(form);
-            }
-        });
-    });
-
-    document.getElementById("confirmChange").addEventListener("click", function () {
-        if (selectedForm) {
-            selectedForm.submit();
+        function openModal(form) {
+            selectedForm = form;
+            document.getElementById('confirmationModal').style.display = 'flex';
         }
-    });
-});
+
+        function closeModal() {
+            selectedForm = null;
+            document.getElementById('confirmationModal').style.display = 'none';
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const buttons = document.querySelectorAll("form button[type='submit']");
+            buttons.forEach(button => {
+                button.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    if (validateDates()) {
+
+                        const form = this.closest("form");
+                        openModal(form);
+                    }
+                });
+            });
+
+            document.getElementById("confirmChange").addEventListener("click", function () {
+                if (selectedForm) {
+                    selectedForm.submit();
+                }
+            });
+        });
     </script>
 </head>
 
 <body>
     <div class="container">
-        <h1>Modifica Volo [[${flight.id}]]</h1>
+        <h1>Update flight[[${flight.id}]]</h1>
         <form th:action="@{'/admin/edit-flight/' + ${flight.id}}" method="post" onsubmit="return validateDates()">
-            <!-- ID del volo (non modificabile) -->
             <input type="hidden" name="id" th:value="${flight.id}" />
 
-
-            <!-- Partenza -->
-            <label for="departureCity">Partenza:</label>
+            <label for="departureCity">Departure:</label>
             <select id="departureCity" name="departureCity" required>
                 <option th:each="airport : ${airports}" th:value="${airport.city}" th:text="${airport.city}"
                     th:selected="${airport.city == flight.departureCity}">
                 </option>
             </select>
-            <!-- Arrivo -->
-            <label for="arrivalCity">Arrivo:</label>
+
+            <label for="arrivalCity">Arrival:</label>
             <select id="arrivalCity" name="arrivalCity" required>
                 <option th:each="airport : ${airports}" th:value="${airport.city}" th:text="${airport.city}"
                     th:selected="${airport.city == flight.arrivalCity}">
                 </option>
             </select>
-            <!-- Data partenza -->
-            <label for="departureTime">Data partenza:</label>
+
+            <label for="departureTime">Departure time:</label>
             <input type="datetime-local" id="departureTime" name="departureTime"
                 th:value="${#dates.format(flight.departureTime, 'yyyy-MM-dd''T''HH:mm')}" required /><br><br>
 
-            <!-- Data arrivo -->
-            <label for="departureTime">Data arrivo:</label>
+            <label for="departureTime">Arrival time:</label>
             <input type="datetime-local" id="arrivalTime" name="arrivalTime"
                 th:value="${#dates.format(flight.arrivalTime, 'yyyy-MM-dd''T''HH:mm')}" required /><br><br>
 
-            <!-- Passeggeri -->
-            <label for="passengers">Passeggeri:</label>
+            <label for="passengers">Booked seats:</label>
             <input type="number" id="passengers" name="passengers" th:value="${flight.passengers}" min="0"
                 required /><br><br>
 
-            <!-- Bagagli -->
-            <label for="goods">Peso Bagagli (kg):</label>
+            <label for="goods">Booked Baggage weight (kg):</label>
             <input type="number" id="goods" name="goods" th:value="${flight.goods}" min="0" required /><br><br>
 
             <!-- Aereo -->
-            <label for="idAirplane">Tipo Aereo:</label>
+            <label for="idAirplane">Airplane:</label>
             <select id="idAirplane" name="idAirplane" required>
                 <option th:each="plane : ${airplanes}" th:value="${plane.typeAirplane}" th:text="${plane.typeAirplane}"
                     th:selected="${plane.typeAirplane == flight.idAirplane}">
                 </option>
             </select><br><br>
 
-                <button type="submit">Aggiorna</button>
+            <button type="submit">Update</button>
         </form>
         <div style="margin-top:20px;">
-            <a href="/admin/select-flight-to-edit">⟵ Torna indietro</a>
-        </div>
-</div>
-
-<div class="modal-confirm-overlay" id="confirmationModal" style="display: none;">
-    <div class="modal-confirm">
-        <p>Confermi di voler modificare il volo ? </p>
-        <div class="modal-confirm-buttons">
-            <button id="confirmChange">Conferma</button>
-            <button type="button" onclick="closeModal()">Annulla</button>
+            <a href="/admin/select-flight-to-edit">⟵ Go back</a>
         </div>
     </div>
-</div>
+
+    <div class="modal-confirm-overlay" id="confirmationModal" style="display: none;">
+        <div class="modal-confirm">
+            <p>Do you confirm to update this flight? </p>
+            <div class="modal-confirm-buttons">
+                <button id="confirmChange">Confirm</button>
+                <button type="button" onclick="closeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

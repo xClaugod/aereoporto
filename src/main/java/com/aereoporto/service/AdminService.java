@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -42,11 +41,11 @@ public class AdminService {
     }
 
     public String createFlight(String departureCity, String arrivalCity,
-                               LocalDateTime departureTime, LocalDateTime arrivalTime,
-                               String idAirplane) {
+            LocalDateTime departureTime, LocalDateTime arrivalTime,
+            String idAirplane) {
         if (arrivalTime.isBefore(departureTime)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Data di arrivo non può essere precedente alla partenza.");
+                    "Arrival date can't be next to departure date.");
         }
 
         LocalDate day = departureTime.toLocalDate();
@@ -69,11 +68,11 @@ public class AdminService {
     }
 
     public String updateFlight(int flightId, String departureCity, String arrivalCity,
-                               LocalDateTime departureTime, LocalDateTime arrivalTime,
-                               String idAirplane, int passengers, int goods) {
+            LocalDateTime departureTime, LocalDateTime arrivalTime,
+            String idAirplane, int passengers, int goods) {
         if (arrivalTime.isBefore(departureTime)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Data di arrivo non può essere precedente alla partenza.");
+                    "Arrival date can't be next to departure date.");
         }
 
         LocalDate day = departureTime.toLocalDate();

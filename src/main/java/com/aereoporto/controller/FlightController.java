@@ -8,31 +8,31 @@ import com.aereoporto.service.FlightService;
 
 @RestController
 public class FlightController {
-    @Autowired
-    FlightService flightService;
+	@Autowired
+	FlightService flightService;
 
-    @GetMapping("/flights")        
-    public List<Flight> getAllFlights() {
-        return flightService.getAllFlights();
-    }
+	@GetMapping("/flights")
+	public List<Flight> getAllFlights() {
+		return flightService.getAllFlights();
+	}
 
-    @GetMapping("/flights/{id}")
+	@GetMapping("/flights/{id}")
 	public Flight getFlight(@PathVariable Integer id) {
 		return flightService.getFlight(id);
 	}
 
 	@PostMapping("/flights/add")
-	public void addFlight(@RequestBody Flight flight){
+	public void addFlight(@RequestBody Flight flight) {
 		flightService.addFlight(flight);
 	}
-	
+
 	@PutMapping("/flights/{id}")
-	public void updateFlight(@PathVariable Integer id, @RequestBody Flight flight){
+	public void updateFlight(@PathVariable Integer id, @RequestBody Flight flight) {
 		flightService.updateFlight(id, flight);
 	}
 
 	@DeleteMapping("/flights/{id}")
-	public void deleteFlight(@PathVariable Integer id){
+	public void deleteFlight(@PathVariable Integer id) {
 		flightService.deleteFlight(id);
 	}
 }

@@ -2,14 +2,12 @@ package com.aereoporto.controller;
 
 import com.aereoporto.service.ViewService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-
 
 @Controller
 public class ViewController {
@@ -34,12 +32,11 @@ public class ViewController {
         return viewService.processFlightSearch(from, to, date, numPassengers, baggageWeight, model);
     }
 
-
     @PostMapping("/book")
     public String bookFlight(@RequestParam int flightId,
-                             @RequestParam int numPassengers,
-                             @RequestParam int baggageWeight,
-                             Model model) {
+            @RequestParam int numPassengers,
+            @RequestParam int baggageWeight,
+            Model model) {
         return viewService.bookFlight(flightId, numPassengers, baggageWeight, model);
     }
 }

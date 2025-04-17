@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <title>Dashboard Admin</title>
     <link rel="stylesheet" th:href="@{/css/admin-dashboard.css}">
 </head>
+
 <body>
 
     <nav class="navbar">
@@ -14,27 +16,28 @@
     </nav>
 
     <div class="welcome-message">
-        👋 Benvenuto, <strong>admin</strong>!
+        👋 Welcome back, <strong>admin</strong>!
     </div>
 
     <section class="card-container">
         <a href="/admin/new-flight" class="card">
             <div class="card-icon">➕</div>
-            <div class="card-text">Inserisci nuovo volo</div>
+            <div class="card-text">Insert new flight</div>
         </a>
         <a href="/admin/select-flight-to-edit" class="card">
             <div class="card-icon">✈️</div>
-            <div class="card-text">Modifica tipo di aereo</div>
+            <div class="card-text">Update a flight</div>
         </a>
         <a href="/admin/select-flight-to-delete" class="card">
             <div class="card-icon">🗑️</div>
-            <div class="card-text">Cancella un volo</div>
+            <div class="card-text">Delete a flight</div>
         </a>
         <a href="/admin/upcoming-flights" class="card">
             <div class="card-icon">📋</div>
-            <div class="card-text">Visualizza voli futuri</div>
+            <div class="card-text">Upcoming flights</div>
         </a>
     </section>
 
 </body>
+
 </html>

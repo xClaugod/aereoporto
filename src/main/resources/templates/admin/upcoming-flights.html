@@ -1,52 +1,22 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <title>Voli Futuri</title>
+    <title>Upcoming Flights</title>
     <link rel="stylesheet" th:href="@{/css/admin-upcoming-flight.css}">
 </head>
-<body>
-
-<h1>Elenco voli futuri</h1>
-<a href="/admin/dashboard">⟵ Torna alla Dashboard</a>
-<br><br>
-<!-- Barra di ricerca -->
-<input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Cerca voli..." />
-
-<table id="flightsTable">
-    <thead>
-        <tr>
-            <th onclick="sortTable(0)">ID</th>
-            <th onclick="sortTable(1)">Aereo</th>
-            <th onclick="sortTable(2)">Partenza</th>
-            <th onclick="sortTable(3)">Arrivo</th>
-            <th onclick="sortTable(4)">Data partenza</th>
-            <th onclick="sortTable(5)">Data arrivo</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr th:each="flight : ${flights}">
-            <td th:text="${flight.id}"></td>
-            <td th:text="${flight.idAirplane}"></td>
-            <td th:text="${flight.departureCity}"></td>
-            <td th:text="${flight.arrivalCity}"></td>
-            <td th:text="${#dates.format(flight.departureTime, 'yyyy-MM-dd HH:mm')}"></td>
-            <td th:text="${#dates.format(flight.arrivalTime, 'yyyy-MM-dd HH:mm')}"></td>
-        </tr>
-    </tbody>
-</table>
 
 <script>
-    
-        function sortTable(columnIndex) {
+
+    function sortTable(columnIndex) {
         const table = document.getElementById("flightsTable");
-        const rows = Array.from(table.rows).slice(1); // Skip header
+        const rows = Array.from(table.rows).slice(1);
         const isAsc = table.getAttribute("data-sort-dir") !== "asc";
 
         rows.sort((a, b) => {
             const cellA = a.cells[columnIndex].innerText.trim();
             const cellB = b.cells[columnIndex].innerText.trim();
 
-            // Conversione dei dati per ordinamento (numeri, date o testo)
             const aVal = parseFloat(cellA.replace(",", ".")) || Date.parse(cellA) || cellA.toLowerCase();
             const bVal = parseFloat(cellB.replace(",", ".")) || Date.parse(cellB) || cellB.toLowerCase();
 
@@ -66,7 +36,6 @@
         let table = document.getElementById("flightsTable");
         let rows = table.getElementsByTagName("tr");
 
-        // Loop through all rows, and hide those that don't match the search
         for (let i = 1; i < rows.length; i++) {
             let cells = rows[i].getElementsByTagName("td");
             let match = false;
@@ -83,5 +52,38 @@
     }
 </script>
 
+<body>
+
+    <h1>Upcoming Flights List</h1>
+    <a href="/admin/dashboard">⟵ Back to Dashboard</a>
+    <br><br>
+    <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Search flights..." />
+
+    <table id="flightsTable">
+        <thead>
+            <tr>
+                <th onclick="sortTable(0)">ID</th>
+                <th onclick="sortTable(1)">Airplane</th>
+                <th onclick="sortTable(2)">Departure</th>
+                <th onclick="sortTable(3)">Arrival</th>
+                <th onclick="sortTable(4)">Departure time</th>
+                <th onclick="sortTable(5)">Arrival time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="flight : ${flights}">
+                <td th:text="${flight.id}"></td>
+                <td th:text="${flight.idAirplane}"></td>
+                <td th:text="${flight.departureCity}"></td>
+                <td th:text="${flight.arrivalCity}"></td>
+                <td th:text="${#dates.format(flight.departureTime, 'yyyy-MM-dd HH:mm')}"></td>
+                <td th:text="${#dates.format(flight.arrivalTime, 'yyyy-MM-dd HH:mm')}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+
+
 </body>
+
 </html>

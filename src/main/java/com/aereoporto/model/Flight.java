@@ -2,13 +2,9 @@ package com.aereoporto.model;
 
 import java.sql.Date;
 import java.sql.Timestamp;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
 import com.aereoporto.Converter.CustomDateConverter;
 import com.aereoporto.Converter.CustomTimestampConverter;
 import com.fasterxml.jackson.annotation.JsonFormat;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
@@ -25,12 +21,12 @@ public class Flight {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_VOLO")
     Integer id;
- 
+
     @Convert(converter = CustomDateConverter.class)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     @Column(name = "GIORNO")
     Date day;
-    
+
     @Column(name = "CITTA_PARTENZA")
     String departureCity;
 
@@ -60,7 +56,22 @@ public class Flight {
     @Version
     private Long version;
 
-    public Flight() {}
+    public Flight() {
+    }
+
+    public Flight(Integer id, Date day, String departureCity, String arrivalCity, Timestamp departureTime,
+            Timestamp arrivalTime, String idAirplane) {
+        this.id = id;
+        this.day = day;
+        this.departureCity = departureCity;
+        this.arrivalCity = arrivalCity;
+        this.departureTime = departureTime;
+        this.arrivalTime = arrivalTime;
+        this.idAirplane = idAirplane;
+        this.passengers = 0;
+        this.goods = 0;
+        this.version = 0l;
+    }
 
     public Flight(Integer id, Date day, String departureCity, String arrivalCity, Timestamp departureTime,
             Timestamp arrivalTime, String idAirplane, Integer passengers, Integer goods) {
@@ -148,7 +159,7 @@ public class Flight {
         this.goods = goods;
     }
 
-    public long getVersion(){ 
+    public long getVersion() {
         return this.version;
     }
 
@@ -157,5 +168,5 @@ public class Flight {
                 + ", departureTime=" + departureTime + ", arrivalTime=" + arrivalTime + ", idAirplane=" + idAirplane
                 + ", passengers=" + passengers + ", goods=" + goods + "]";
     }
-    
+
 }

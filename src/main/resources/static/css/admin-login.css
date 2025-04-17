@@ -1,0 +1,103 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url("/img/background.svg") no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+}
+
+form {
+    background-color: rgba(10, 25, 47, 0.85); /* trasparente elegante */
+    padding: 30px 40px;
+    width: 30%;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.6);
+    text-align: center;
+    transition: transform 0.2s ease-in-out;
+}
+
+h1 {
+    margin-bottom: 20px;
+    color: #00B8D9;
+    text-shadow: 1px 1px 4px #000;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    text-align: left;
+    color: #ccc;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    background-color: #1c1c1c;
+    color: white;
+}
+
+button {
+    margin-top: 10px;
+    background-color: #00C853;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #00a94d;
+}
+
+p {
+    margin-top: 15px;
+}
+
+p[style] {
+    color: #ff5252 !important; /* errore login */
+}
+
+a {
+    display: block;
+    text-align: center;
+    margin: 30px auto;
+    width: fit-content;
+    background-color: #0097A7;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+a:hover {
+    background-color: rgba(25, 118, 210, 0.9);
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    20% { transform: translateX(-10px); }
+    40% { transform: translateX(10px); }
+    60% { transform: translateX(-8px); }
+    80% { transform: translateX(8px); }
+    100% { transform: translateX(0); }
+}
+
+.shake {
+    animation: shake 0.4s ease-in-out;
+}

@@ -2,13 +2,75 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Nuovo Volo</title>
-    <link rel="stylesheet" th:href="@{/css/admin-style.css}">
+    <link rel="stylesheet" th:href="@{/css/admin-new-flight.css}">
+    <link rel="stylesheet" th:href="@{/css/modal.css}">
+        <script>
+function validateDates() {
+    const departureTime = document.getElementById('departureTime').value;
+    const arrivalTime = document.getElementById('arrivalTime').value;
+    
+    if (departureTime && arrivalTime) {
+        if (arrivalTime <= departureTime) {
+            alert('La data di arrivo deve essere maggiore della data di partenza.');
+            return false; // Impedisce l'invio del form
+        }
+    }
+    return true; // Permette l'invio del form
+}
+
+function validateForm() {
+    const departureCity = document.getElementById('departureCity').value;
+    const arrivalCity = document.getElementById('arrivalCity').value;
+    const departureTime = document.getElementById('departureTime').value;
+    const arrivalTime = document.getElementById('arrivalTime').value;
+    const idAirplane = document.getElementById('idAirplane').value;
+
+    // Verifica che tutti i campi siano compilati
+    if (!departureCity || !arrivalCity || !departureTime || !arrivalTime || !idAirplane) {
+        alert('Per favore, compila tutti i campi.');
+        return false; // Impedisce l'invio del form se non tutti i campi sono compilati
+    }
+    return true; // Permette l'invio del form
+}
+
+let selectedForm = null;
+
+function openModal(form) {
+    selectedForm = form;
+    document.getElementById('confirmationModal').style.display = 'flex';
+}
+
+function closeModal() {
+    selectedForm = null;
+    document.getElementById('confirmationModal').style.display = 'none';
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    const button = document.querySelector("form button[type='submit']");
+    button.addEventListener("click", function (e) {
+        e.preventDefault();
+        
+        // Se il form è valido, apri la modale
+        if (validateForm() && validateDates()) {
+            const form = this.closest("form");
+            openModal(form);
+        }
+    });
+
+    document.getElementById("confirmCreation").addEventListener("click", function () {
+        if (selectedForm) {
+            selectedForm.submit();
+        }
+    });
+});
+
+    </script>
 </head>
 <body>
     <div class="container">
         <h1>Inserisci Nuovo Volo</h1>
 
-        <form th:action="@{/admin/new-flight}" method="post" th:object="${flight}">
+        <form th:action="@{/admin/new-flight}" method="post" th:object="${flight}" onsubmit="return validateDates()">
             <label for="departureCity">Partenza:</label>
             <select id="departureCity" name="departureCity" required>
                 <option value="">-- Seleziona --</option>
@@ -27,14 +89,11 @@
                 </option>
             </select><br>
 
-            <label for="departureTime">Data e Ora:</label>
+            <label for="departureTime">Data e Ora partenza:</label>
             <input type="datetime-local" id="departureTime" name="departureTime" required><br>
 
-            <label for="passengers">Passeggeri:</label>
-            <input type="number" id="passengers" name="passengers" min="0" required><br>
-
-            <label for="goods">Bagagli (kg):</label>
-            <input type="number" id="goods" name="goods" min="0" required><br>
+            <label for="departureTime">Data e Ora arrivo:</label>
+            <input type="datetime-local" id="arrivalTime" name="arrivalTime" required><br>
 
             <label for="idAirplane">Aereo:</label>
             <select id="idAirplane" name="idAirplane" required>
@@ -52,5 +111,15 @@
             <a href="/admin/dashboard">⟵ Torna alla Dashboard</a>
         </div>
     </div>
+    <div class="modal-confirm-overlay" id="confirmationModal" style="display: none;">
+        <div class="modal-confirm">
+            <p>Confermi di voler creare il volo ? </p>
+            <div class="modal-confirm-buttons">
+                <button id="confirmCreation">Conferma</button>
+                <button type="button" onclick="closeModal()">Annulla</button>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

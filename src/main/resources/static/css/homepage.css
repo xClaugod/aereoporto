@@ -1,0 +1,85 @@
+/* styles.css */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url("/img/background.svg");
+    background-size: cover;
+    color: #fff;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 6px #000;
+}
+
+form {
+    background-color: rgba(0, 0, 0, 0.6);
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 30px;
+    border-radius: 15px;
+    background-color: rgba(10, 25, 47, 0.85);
+}
+
+form label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+form input,
+form select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 8px;
+    border: none;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+form button {
+    margin-top: 20px;
+    padding: 12px;
+    width: 100%;
+    font-size: 1.2rem;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #1976D2;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #00B8D9;
+    transition: background-color 0.3s ease;
+}
+
+a:hover {
+    background-color: rgba(25, 118, 210, 0.9);
+}
+
+div[style*="text-align: right;"] {
+    padding: 10px 20px;
+}
+
+@media screen and (max-width: 600px) {
+    form {
+        margin: 20px;
+        padding: 20px;
+    }
+}

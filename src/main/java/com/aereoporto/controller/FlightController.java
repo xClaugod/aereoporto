@@ -1,11 +1,8 @@
 package com.aereoporto.controller;
 
 import java.util.List;
-
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.aereoporto.Converter.CustomTimestampConverter;
 import com.aereoporto.model.Flight;
 import com.aereoporto.service.FlightService;
 
@@ -23,13 +20,6 @@ public class FlightController {
 	public Flight getFlight(@PathVariable Integer id) {
 		return flightService.getFlight(id);
 	}
-/* 
-    @GetMapping("/specificPlayers")
-	public List<Aereo> searchAerei(@RequestParam(required = false) String nome,
-            @RequestParam(required = false) String cognome,
-            @RequestParam(required = false) String squadra){
-		return airplaneService.searchPlayers(nome,cognome,squadra);
-	}*/
 
 	@PostMapping("/flights/add")
 	public void addFlight(@RequestBody Flight flight){

@@ -2,12 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Risultati voli</title>
+    <link rel="stylesheet" th:href="@{/css/results.css}" />
+    <link rel="stylesheet" th:href="@{/css/modal.css}" />
 </head>
 <body>
     <h1>Risultati per [[${from}]] → [[${to}]]</h1>
 
     <div th:if="${noFlights}">
-        <p>Nessun volo disponibile tra gli aeroporti selezionati.</p>
+        <h1>Nessun volo disponibile tra gli aeroporti selezionati.</h1>
     </div>
 
     <!-- Mostra il messaggio di errore in caso di conflitto di concorrenza -->
@@ -38,8 +40,50 @@
             </td>
         </tr>
     </table>
+    
 
     <br>
     <a href="/">Torna alla home</a>
+    <div class="modal-confirm-overlay" id="confirmationModal" style="display: none;">
+        <div class="modal-confirm">
+            <p>Confermi la prenotazione del volo per [[${numPassengers}]] persone? </p>
+            <div class="modal-confirm-buttons">
+                <button id="confirmBooking">Conferma</button>
+                <button type="button" onclick="closeModal()">Annulla</button>
+            </div>
+        </div>
+    </div>
+
+
+<script>
+    let selectedForm = null;
+
+    function openModal(form) {
+        selectedForm = form;
+        document.getElementById('confirmationModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        selectedForm = null;
+        document.getElementById('confirmationModal').style.display = 'none';
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const buttons = document.querySelectorAll("form button[type='submit']");
+        buttons.forEach(button => {
+            button.addEventListener("click", function (e) {
+                e.preventDefault();
+                const form = this.closest("form");
+                openModal(form);
+            });
+        });
+
+        document.getElementById("confirmBooking").addEventListener("click", function () {
+            if (selectedForm) {
+                selectedForm.submit();
+            }
+        });
+    });
+</script>
 </body>
 </html>

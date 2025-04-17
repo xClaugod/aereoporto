@@ -1,19 +1,8 @@
 package com.aereoporto.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.Specification;
-
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-
 import org.springframework.stereotype.Service;
-
-import com.aereoporto.Converter.CustomTimestampConverter;
 import com.aereoporto.model.Flight;
 import com.aereoporto.repository.FlightRepository;
 
@@ -22,13 +11,17 @@ public class FlightService {
     @Autowired
     private FlightRepository flightRepository;
 
-    public List<Flight> getAllFlights(){return flightRepository.findAll();}
+    public List<Flight> getAllFlights() {
+        return flightRepository.findAll();
+    }
 
-	public Flight getFlight(Integer id) {
+    public Flight getFlight(Integer id) {
         return flightRepository.findById(id).orElseThrow(() -> new RuntimeException("Flight not found"));
-	}
+    }
 
-    public void addFlight(Flight Flight){ flightRepository.save(Flight); }
+    public void addFlight(Flight Flight) {
+        flightRepository.save(Flight);
+    }
 
     public Flight updateFlight(Integer id, Flight uptadedFlight) {
         return flightRepository.findById(id).map(Flight -> {
@@ -47,12 +40,11 @@ public class FlightService {
         if (!flightRepository.existsById(id)) {
             throw new RuntimeException("Flight not found");
         }
-        flightRepository.deleteById(id);	
+        flightRepository.deleteById(id);
     }
-
 
     public List<Flight> getFlightsFromNowOn() {
         return flightRepository.findUpcomingFlights();
     }
-    
+
 }

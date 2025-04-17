@@ -2,21 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Home Page</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}" />
-    <style>
-        .top-right {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/homepage.css}" />
 </head>
 <body>
     <div style="text-align: right;">
-        <a th:href="@{/admin/login}">Login</a>
+        <a th:href="@{/admin/login-page}">Login</a>
     </div>
 
-    <h1>Benvenuto nella pagina principale!</h1>
+    <h1>Claudio's AIRPORT</h1>
     
     <form th:action="@{/search-flights}" method="post">
         <label for="from">Aeroporto di partenza</label>
@@ -33,10 +26,10 @@
         <input type="date" id="date" name="date" required />
                 
         <label for="numPassengers">Numero persone</label>
-        <input type="number" id="numPassengers" name="numPassengers" placeholder="1" required />
+        <input type="number" id="numPassengers" name="numPassengers" placeholder="1" min="1" required />
         
         <label for="baggageWeight">Peso bagaglio (in kg)</label>
-        <input type="number" id="baggageWeight" name="baggageWeight" placeholder="2" required />
+        <input type="number" id="baggageWeight" name="baggageWeight" min="0" placeholder="2" />
         
         <button type="submit">Cerca voli</button>
     </form>

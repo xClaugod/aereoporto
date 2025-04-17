@@ -2,42 +2,39 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Dashboard Admin</title>
-    <style>
-        body { font-family: Arial, sans-serif; padding: 20px; }
-        h1 { margin-bottom: 30px; }
-        .actions a {
-            display: block;
-            margin: 10px 0;
-            padding: 10px;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            width: 300px;
-            border-radius: 5px;
-        }
-        .actions a:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/admin-dashboard.css}">
 </head>
 <body>
 
-<h1>Dashboard Amministratore</h1>
+    <nav class="navbar">
+        <span class="navbar-title">✈️ Admin Dashboard</span>
+        <form th:action="@{/logout}" method="post" class="logout-form">
+            <button type="submit" class="logout-button">Logout</button>
+        </form>
+    </nav>
 
-<div class="actions">
-    <a href="/admin/new-flight">➕ Inserisci nuovo volo</a>
-    <a href="/admin/select-flight-to-edit">✈️ Modifica tipo di aereo per un volo</a>
-    <a href="/admin/select-flight-to-delete">🗑️ Cancella un volo</a>
-    <a href="/admin/upcoming-flights">📋 Visualizza voli futuri con dettagli passeggeri e bagagli</a>
-</div>
+    <div class="welcome-message">
+        👋 Benvenuto, <strong>admin</strong>!
+    </div>
 
-<div style="text-align: right; margin-bottom: 20px;">
-    <form th:action="@{/logout}" method="post">
-        <button type="submit" style="padding: 8px 16px; background-color: red; color: white; border: none; border-radius: 5px;">
-            🔒 Logout
-        </button>
-    </form>
-</div>
+    <section class="card-container">
+        <a href="/admin/new-flight" class="card">
+            <div class="card-icon">➕</div>
+            <div class="card-text">Inserisci nuovo volo</div>
+        </a>
+        <a href="/admin/select-flight-to-edit" class="card">
+            <div class="card-icon">✈️</div>
+            <div class="card-text">Modifica tipo di aereo</div>
+        </a>
+        <a href="/admin/select-flight-to-delete" class="card">
+            <div class="card-icon">🗑️</div>
+            <div class="card-text">Cancella un volo</div>
+        </a>
+        <a href="/admin/upcoming-flights" class="card">
+            <div class="card-icon">📋</div>
+            <div class="card-text">Visualizza voli futuri</div>
+        </a>
+    </section>
 
 </body>
 </html>

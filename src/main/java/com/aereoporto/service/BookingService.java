@@ -3,7 +3,6 @@ package com.aereoporto.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
-
 import com.aereoporto.model.Flight;
 import com.aereoporto.repository.FlightRepository;
 
@@ -20,7 +19,7 @@ public class BookingService {
             // Tentativo di prenotare il volo
             flight.setPassengers(flight.getPassengers() + numPassengers);
             flight.setGoods(flight.getGoods() + baggageWeight);
-            flightRepository.save(flight);  // Hibernate verifica la versione
+            flightRepository.save(flight); // Hibernate verifica la versione
 
         } catch (OptimisticLockingFailureException e) {
             throw new Exception("Conflitto di concorrenza: il volo è stato aggiornato nel frattempo. Riprova.");

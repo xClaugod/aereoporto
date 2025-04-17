@@ -2,18 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Modifica Volo</title>
-    <style>
-        body { font-family: Arial, sans-serif; padding: 20px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
-        a { text-decoration: none; color: white; background-color: #28a745; padding: 8px 12px; border-radius: 5px; }
-        a:hover { background-color: #218838; }
-        input[type="text"] { padding: 5px 10px; margin-bottom: 20px; width: 100%; }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/admin-select-edit.css}">
 </head>
 <body>
 
 <h1>Modifica tipo di aereo per un volo</h1>
+<a href="/admin/dashboard">⟵ Torna alla Dashboard</a>
+<br><br>
 
 <!-- Barra di ricerca -->
 <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Cerca voli..." />
@@ -21,11 +16,12 @@
 <table id="flightsTable">
     <thead>
         <tr>
-            <th>ID</th>
-            <th>Aereo</th>
-            <th>Partenza</th>
-            <th>Arrivo</th>
-            <th>Data</th>
+            <th onclick="sortTable(0)">ID</th>
+            <th onclick="sortTable(1)">Aereo</th>
+            <th onclick="sortTable(2)">Partenza</th>
+            <th onclick="sortTable(3)">Arrivo</th>
+            <th onclick="sortTable(4)">Data partenza</th>
+            <th onclick="sortTable(5)">Data arrivo</th>
             <th>Modifica</th>
         </tr>
     </thead>
@@ -36,19 +32,46 @@
             <td th:text="${flight.departureCity}"></td>
             <td th:text="${flight.arrivalCity}"></td>
             <td th:text="${#dates.format(flight.departureTime, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:text="${#dates.format(flight.arrivalTime, 'yyyy-MM-dd HH:mm')}"></td>
             <td><a th:href="@{'/admin/edit-flight/' + ${flight.id}}">Modifica</a></td>
         </tr>
     </tbody>
 </table>
 
 <script>
+    // Funzione per ordinare la tabella
+    function sortTable(columnIndex) {
+        const table = document.getElementById("flightsTable");
+        const rows = Array.from(table.rows).slice(1); // Skip header
+        const isAsc = table.getAttribute("data-sort-dir") !== "asc";
+
+        rows.sort((a, b) => {
+            const cellA = a.cells[columnIndex].innerText.trim();
+            const cellB = b.cells[columnIndex].innerText.trim();
+
+            // Conversione dei dati per ordinamento (numeri, date o testo)
+            const aVal = parseFloat(cellA.replace(",", ".")) || Date.parse(cellA) || cellA.toLowerCase();
+            const bVal = parseFloat(cellB.replace(",", ".")) || Date.parse(cellB) || cellB.toLowerCase();
+
+            if (aVal < bVal) return isAsc ? -1 : 1;
+            if (aVal > bVal) return isAsc ? 1 : -1;
+            return 0;
+        });
+
+        const tbody = table.tBodies[0];
+        tbody.innerHTML = "";
+        rows.forEach(row => tbody.appendChild(row));
+        table.setAttribute("data-sort-dir", isAsc ? "asc" : "desc");
+    }
+
+    // Funzione per filtrare la tabella
     function filterTable() {
         let input = document.getElementById("searchInput");
         let filter = input.value.toLowerCase();
         let table = document.getElementById("flightsTable");
         let rows = table.getElementsByTagName("tr");
 
-        // Loop through all rows, and hide those that don't match the search
+        // Loop attraverso tutte le righe e nascondi quelle che non corrispondono
         for (let i = 1; i < rows.length; i++) {
             let cells = rows[i].getElementsByTagName("td");
             let match = false;

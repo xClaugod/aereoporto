@@ -25,26 +25,33 @@ public class Airplane {
         this.qtyGoods = qtyGoods;
     }
 
-    public Airplane(){}
-    
+    public Airplane() {
+    }
+
     public String getTypeAirplane() {
         return typeAirplane;
     }
+
     public void setTypeAirplane(String typeAirplane) {
         this.typeAirplane = typeAirplane;
     }
+
     public Integer getNumPassengers() {
         return numPassengers;
     }
+
     public void setNumPassengers(Integer numPassengers) {
         this.numPassengers = numPassengers;
     }
+
     public Integer getQtyGoods() {
         return qtyGoods;
     }
+
     public void setQtyGoods(Integer qtyGoods) {
         this.qtyGoods = qtyGoods;
     }
+
     public String toString() {
         return "Airplane [typeAirplane=" + typeAirplane + ", numPassengers=" + numPassengers + ", qtyGoods=" + qtyGoods
                 + "]";

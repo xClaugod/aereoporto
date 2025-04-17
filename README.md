@@ -4,11 +4,13 @@
 
 ## Introduction
 Hey visitors🚶‍♀️🚶‍♂️, welcome to my final project for best engage & sistemi informativi!
-This is an app wrote using java & spring boot 
-Database: MySQL
-Test: JUnit & Mockito
+- This is an app wrote using java & spring boot 
+- Database: MySQL
+- Test: JUnit & Mockito
 
-Following test track, i code this web app to search and book flight. Profiles are just for admin which can create,delete,update a flight.
+ Following test track, i code this web app to search and book flight. ✈️
+- Profiles are just for admin which can create,delete,update a flight. 
+- Free users can book a flight with specific #person and baggage weight. (But only following test directives) 
 
 
 This repo contains 2 folder:

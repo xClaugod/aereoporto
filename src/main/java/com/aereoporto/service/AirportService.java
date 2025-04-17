@@ -9,7 +9,7 @@ import com.aereoporto.repository.AirportRepository;
 @Service
 public class AirportService {
     @Autowired
-    private AirportRepository airportRepository;
+    public AirportRepository airportRepository; //public to test
 
     /**
      * Retrieve all airports from the database.

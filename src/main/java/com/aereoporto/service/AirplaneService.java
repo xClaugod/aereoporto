@@ -9,7 +9,7 @@ import com.aereoporto.repository.AirplaneRepository;
 @Service
 public class AirplaneService {
     @Autowired
-    private AirplaneRepository airplaneRepository;
+    public AirplaneRepository airplaneRepository; //public to test
 
     /**
      * @return all airplanes

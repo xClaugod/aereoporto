@@ -13,7 +13,20 @@
 
             if (departureTime && arrivalTime) {
                 if (arrivalTime <= departureTime) {
-                    alert("Arrival time can't be next to departure time.");
+                    alert("Arrival time can't be before to departure time.");
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function validateCity() {
+            const departureCity = document.getElementById('departureCity').value;
+            const arrivalCity = document.getElementById('arrivalCity').value;
+
+            if (departureCity && arrivalCity) {
+                if (departureCity == arrivalCity) {
+                    alert("Arrival city can't be equal to departure city.");
                     return false;
                 }
             }
@@ -41,7 +54,7 @@
             buttons.forEach(button => {
                 button.addEventListener("click", function (e) {
                     e.preventDefault();
-                    if (validateDates()) {
+                    if (validateDates() && validateCity()) {
 
                         const form = this.closest("form");
                         openModal(form);
@@ -60,7 +73,7 @@
 
 <body>
     <div class="container">
-        <h1>Update flight[[${flight.id}]]</h1>
+        <h1>Update flight [[${flight.id}]]</h1>
         <form th:action="@{'/admin/edit-flight/' + ${flight.id}}" method="post" onsubmit="return validateDates()">
             <input type="hidden" name="id" th:value="${flight.id}" />
 
@@ -93,7 +106,6 @@
             <label for="goods">Booked Baggage weight (kg):</label>
             <input type="number" id="goods" name="goods" th:value="${flight.goods}" min="0" required /><br><br>
 
-            <!-- Aereo -->
             <label for="idAirplane">Airplane:</label>
             <select id="idAirplane" name="idAirplane" required>
                 <option th:each="plane : ${airplanes}" th:value="${plane.typeAirplane}" th:text="${plane.typeAirplane}"

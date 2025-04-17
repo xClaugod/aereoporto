@@ -10,7 +10,7 @@ import com.aereoporto.repository.FlightRepository;
 public class BookingService {
 
     @Autowired
-    private FlightRepository flightRepository;
+    public FlightRepository flightRepository; //public to test
 
     /**
      * Books a flight by updating the number of passengers and the baggage weight.

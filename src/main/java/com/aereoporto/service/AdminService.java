@@ -45,7 +45,12 @@ public class AdminService {
             String idAirplane) {
         if (arrivalTime.isBefore(departureTime)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Arrival date can't be next to departure date.");
+                    "Arrival date can't be before to departure date.");
+        }
+
+        if (arrivalCity.equals(departureCity)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Arrival city can't be equal to departure city.");
         }
 
         LocalDate day = departureTime.toLocalDate();
@@ -72,7 +77,12 @@ public class AdminService {
             String idAirplane, int passengers, int goods) {
         if (arrivalTime.isBefore(departureTime)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Arrival date can't be next to departure date.");
+                    "Arrival date can't be before to departure date.");
+        }
+
+        if (arrivalCity.equals(departureCity)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Arrival city can't be equal to departure city.");
         }
 
         LocalDate day = departureTime.toLocalDate();

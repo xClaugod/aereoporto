@@ -9,7 +9,7 @@ import com.aereoporto.repository.FlightRepository;
 @Service
 public class FlightService {
     @Autowired
-    private FlightRepository flightRepository;
+    public FlightRepository flightRepository; //public to test
 
     /**
      * Gets all flights from the database.

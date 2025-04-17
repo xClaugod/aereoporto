@@ -6,18 +6,6 @@
     <link rel="stylesheet" th:href="@{/css/admin-new-flight.css}">
     <link rel="stylesheet" th:href="@{/css/modal.css}">
     <script>
-        function validateDates() {
-            const departureTime = document.getElementById('departureTime').value;
-            const arrivalTime = document.getElementById('arrivalTime').value;
-
-            if (departureTime && arrivalTime) {
-                if (arrivalTime <= departureTime) {
-                    alert("Arrival time can't be next to departure time.");
-                    return false;
-                }
-            }
-            return true;
-        }
 
         function validateForm() {
             const departureCity = document.getElementById('departureCity').value;
@@ -30,6 +18,19 @@
                 alert('Please fill all the fields.');
                 return false;
             }
+
+            if (departureTime && arrivalTime) {
+                if (arrivalTime <= departureTime) {
+                    alert("Arrival time can't be before to departure time.");
+                    return false;
+                }
+            }
+
+            if (departureCity == arrivalCity) {
+                alert("Arrival city can't be equal to departure city.");
+                return false;
+            }
+            
             return true;
         }
 
@@ -70,7 +71,7 @@
     <div class="container">
         <h1>Insert new flight</h1>
 
-        <form th:action="@{/admin/new-flight}" method="post" th:object="${flight}" onsubmit="return validateDates()">
+        <form th:action="@{/admin/new-flight}" method="post" th:object="${flight}" onsubmit="return validateForm()">
             <label for="departureCity">Departure:</label>
             <select id="departureCity" name="departureCity" required>
                 <option value="">-- Select --</option>

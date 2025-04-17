@@ -15,17 +15,18 @@ import java.util.stream.Collectors;
 @Service
 public class ViewService {
 
+    //all public to test
     @Autowired
-    private AirportService airportService;
+    public AirportService airportService;
 
     @Autowired
-    private FlightService flightService;
+    public FlightService flightService;
 
     @Autowired
-    private AirplaneService airplaneService;
+    public AirplaneService airplaneService;
 
     @Autowired
-    private BookingService bookingService;
+    public BookingService bookingService;
 
     /**
      * Prepare the home page view.

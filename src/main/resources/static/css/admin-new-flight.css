@@ -7,7 +7,6 @@ body {
     color: white;
 }
 
-/* Contenitore centrale */
 .container {
     max-width: 600px;
     margin: 3rem auto;
@@ -18,7 +17,6 @@ body {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
 }
 
-/* Titolo */
 .container h1 {
     text-align: center;
     font-size: 1.8rem;
@@ -27,7 +25,6 @@ body {
     text-shadow: 1px 1px 4px #000;
 }
 
-/* Label e Input */
 label {
     display: block;
     margin-top: 1rem;
@@ -55,7 +52,6 @@ select:focus {
     background-color: rgba(255, 255, 255, 0.2);
 }
 
-/* Bottone */
 button[type="submit"] {
     margin-top: 2rem;
     width: 100%;
@@ -74,7 +70,6 @@ button[type="submit"]:hover {
     background-color: #0086a8;
 }
 
-/* Link di ritorno */
 a {
     color: #ffffff;
     text-decoration: none;
@@ -89,7 +84,6 @@ a:hover {
 }
 
 
-/* Responsive */
 @media (max-width: 640px) {
     .container {
         margin: 1rem;

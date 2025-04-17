@@ -31,7 +31,6 @@ a[href="/admin/dashboard"]:hover {
     transform: scale(1.02);
 }
 
-/* Barra di ricerca */
 #searchInput {
     width: 100%;
     padding: 12px;
@@ -48,7 +47,6 @@ a[href="/admin/dashboard"]:hover {
     color: #00B8D9;
 }
 
-/* Tabella */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -80,7 +78,6 @@ th:hover {
     background-color: rgba(255, 255, 255, 0.15);
 }
 
-/* Bottone Cancella */
 form {
     display: inline;
 }
@@ -101,7 +98,6 @@ button:hover {
     transform: scale(1.05);
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     th, td {
         font-size: 0.9rem;
